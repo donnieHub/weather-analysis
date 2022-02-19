@@ -11,13 +11,13 @@ repositories {
 	mavenCentral()
 }
 
-application {
-	mainClass = 'org.mychko.weatheranalysis.WeatherAnalysisApplication'
+jar {
+	manifest {
+		attributes(
+				'Main-Class': 'org.mychko.weatheranalysis.WeatherAnalysisApplication'
+		)
+	}
 }
 
 dependencies {
-}
-
-tasks.named('test') {
-	useJUnitPlatform()
 }

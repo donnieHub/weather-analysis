@@ -21,7 +21,7 @@ public class WeatherAnalysisApplication {
 
 		System.out.println(response.statusCode());
 		System.out.println(response.body());
-		System.out.println("the end");
+		System.out.println("--------------------------------------------------------");
 	}
 
 	private String createURI (String url, String... params) {
