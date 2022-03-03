@@ -1,7 +1,6 @@
 package org.mychko.weatheranalysis;
 
 import java.io.IOException;
-import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
@@ -9,19 +8,34 @@ import java.time.Duration;
 
 public class WeatherAnalysisApplication {
 
-	private final static String LAT = "?lat=59.94117";
-	private final static String LON = "&lon=30.324928";
 	private final static String URI = "https://api.weather.yandex.ru/v2/informers";
 
 	public static void main(String[] args) throws IOException, InterruptedException {
+
 		WeatherAnalysisApplication app = new WeatherAnalysisApplication();
+		City city = app.citySelection(args);
 		HttpClient client = app.createClient();
-		HttpRequest request = app.createGetRequest(app.createURI(URI, LAT, LON));
+		HttpRequest request = app.createGetRequest(
+				app.createURI(
+						URI,
+						"?lat="+ city.getCoord().getLat(),
+						"&lon="+city.getCoord().getLon()));
 		HttpResponse<String> response = app.getApiResponse(client, request);
 
+		System.out.println("Погода в городе " + city.getCityName());
 		System.out.println(response.statusCode());
 		System.out.println(response.body());
 		System.out.println("--------------------------------------------------------");
+	}
+
+	private City citySelection(String args[]) {
+		City city = null;
+		if (args.length == 0) {
+			city = new City();
+		} else {
+			city = new City(CityName.valueOf(args[0]));
+		}
+		return city;
 	}
 
 	private String createURI (String url, String... params) {
