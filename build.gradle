@@ -5,6 +5,7 @@ plugins {
 
 group = 'org.mychko'
 version = '0.0.1-SNAPSHOT'
+archivesBaseName = 'weather-analysis'
 sourceCompatibility = '11'
 
 repositories {
