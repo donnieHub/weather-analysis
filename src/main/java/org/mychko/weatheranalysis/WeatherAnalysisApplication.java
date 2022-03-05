@@ -33,6 +33,11 @@ public class WeatherAnalysisApplication {
 		if (args.length == 0) {
 			city = new City();
 		} else {
+			try {
+				CityName.valueOf(args[0]);
+			} catch (IllegalArgumentException e) {
+				throw new RuntimeException("Please insert name of the city for example OMSK");
+			}
 			city = new City(CityName.valueOf(args[0]));
 		}
 		return city;
