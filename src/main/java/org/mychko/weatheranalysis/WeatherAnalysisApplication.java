@@ -1,10 +1,16 @@
 package org.mychko.weatheranalysis;
 
+import com.mongodb.MongoClient;
+import com.mongodb.client.FindIterable;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
+import org.bson.Document;
 import java.io.IOException;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.time.Duration;
+import java.util.Iterator;
 
 public class WeatherAnalysisApplication {
 
@@ -18,14 +24,24 @@ public class WeatherAnalysisApplication {
 		HttpRequest request = app.createGetRequest(
 				app.createURI(
 						URI,
-						"?lat="+ city.getCoord().getLat(),
-						"&lon="+city.getCoord().getLon()));
+						"?lat=" + city.getCoord().getLat(),
+						"&lon=" + city.getCoord().getLon()));
 		HttpResponse<String> response = app.getApiResponse(client, request);
 
 		System.out.println("Погода в городе " + city.getCityName());
 		System.out.println(response.statusCode());
 		System.out.println(response.body());
 		System.out.println("--------------------------------------------------------");
+		MongoClient mongoClient = new MongoClient("localhost", 27017);
+		MongoDatabase db = mongoClient.getDatabase("weather");
+		Document document = Document.parse(response.body());
+		db.getCollection("weather-coll").insertOne(document);
+		MongoCollection<Document> collection = db.getCollection("weather-coll");
+		FindIterable<Document> iterDoc = collection.find();
+		Iterator it = iterDoc.iterator();
+		while (it.hasNext()) {
+			System.out.println(it.next());
+		}
 	}
 
 	private City citySelection(String args[]) {
