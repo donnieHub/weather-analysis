@@ -12,12 +12,9 @@ public class City {
         this.setCoord(coord);
     }
 
+    //TODO вынести координаты в HashMap
     public City(CityName cityName) {
         this(cityName, new Coord("59.94117", "30.324928"));
-    }
-
-    public City() {
-        this(CityName.SPB, new Coord("59.94117", "30.324928"));
     }
 
     public CityName getCityName() {

@@ -10,10 +10,11 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.time.Duration;
-import java.util.Iterator;
+import org.mychko.weatheranalysis.City.Coord;
 
 public class WeatherAnalysisApplication {
 
+	//TODO вынести в properties
 	private final static String URI = "https://api.weather.yandex.ru/v2/informers";
 
 	public static void main(String[] args) throws IOException, InterruptedException {
@@ -32,22 +33,23 @@ public class WeatherAnalysisApplication {
 		System.out.println(response.statusCode());
 		System.out.println(response.body());
 		System.out.println("--------------------------------------------------------");
+
 		MongoClient mongoClient = new MongoClient("localhost", 27017);
 		MongoDatabase db = mongoClient.getDatabase("weather");
 		Document document = Document.parse(response.body());
 		db.getCollection("weather-coll").insertOne(document);
 		MongoCollection<Document> collection = db.getCollection("weather-coll");
 		FindIterable<Document> iterDoc = collection.find();
-		Iterator it = iterDoc.iterator();
-		while (it.hasNext()) {
-			System.out.println(it.next());
+		//TODO выводить что-то человекочитаемое
+		for (Document value : iterDoc) {
+			System.out.println(value);
 		}
 	}
 
 	private City citySelection(String args[]) {
 		City city = null;
 		if (args.length == 0) {
-			city = new City();
+			city = new City(CityName.SPB, new Coord("59.94117", "30.324928"));
 		} else {
 			try {
 				CityName.valueOf(args[0]);
