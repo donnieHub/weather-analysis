@@ -4,6 +4,11 @@ volumes:
   mongodb_volume:
 
 services:
+  weather:
+    build: .
+    environment:
+      - MONGO_DB_ADDR=mymongo
+      - MONGO_DB_PORT=27017
   mymongo:
     image: mongo:latest
     restart: always
