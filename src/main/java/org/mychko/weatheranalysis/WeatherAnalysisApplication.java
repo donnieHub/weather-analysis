@@ -1,5 +1,7 @@
 package org.mychko.weatheranalysis;
 
+import static org.mychko.weatheranalysis.CityName.SPB;
+
 import com.mongodb.MongoClient;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
@@ -34,6 +36,7 @@ public class WeatherAnalysisApplication {
 		System.out.println(response.body());
 		System.out.println("--------------------------------------------------------");
 
+		//TODO вынести в properties
 		MongoClient mongoClient = new MongoClient("mymongo", 27017);
 		MongoDatabase db = mongoClient.getDatabase("weather");
 		Document document = Document.parse(response.body());
@@ -49,7 +52,7 @@ public class WeatherAnalysisApplication {
 	private City citySelection(String args[]) {
 		City city = null;
 		if (args.length == 0) {
-			city = new City(CityName.SPB, new Coord("59.94117", "30.324928"));
+			city = new City(SPB, City.cityCoord.get(SPB));
 		} else {
 			try {
 				CityName.valueOf(args[0]);
@@ -81,6 +84,7 @@ public class WeatherAnalysisApplication {
 				.uri(java.net.URI.create(uri))
 				.timeout(Duration.ofMinutes(1))
 				.header("Content-Type", "application/json")
+				//TODO вынести в properties
 				.header("X-Yandex-API-Key", "bd804162-bf13-4baa-9508-27b3ba88c782")
 				.GET()
 				.build();

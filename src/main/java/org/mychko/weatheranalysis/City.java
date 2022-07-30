@@ -1,20 +1,27 @@
 package org.mychko.weatheranalysis;
 
+import static org.mychko.weatheranalysis.CityName.MSC;
+import static org.mychko.weatheranalysis.CityName.OMSK;
+import static org.mychko.weatheranalysis.CityName.SPB;
+
 import java.util.HashMap;
 
 public class City {
     private CityName cityName;
     private Coord coord;
-    private HashMap<CityName, Coord> cityCoord;
+    public static final HashMap<CityName, Coord> cityCoord = new HashMap<>();
+
+    static {
+        initCityCoord();
+    }
 
     public City(CityName cityName, Coord coord) {
         this.setCityName(cityName);
         this.setCoord(coord);
     }
 
-    //TODO вынести координаты в HashMap
     public City(CityName cityName) {
-        this(cityName, new Coord("59.94117", "30.324928"));
+        this(cityName, cityCoord.get(cityName));
     }
 
     public CityName getCityName() {
@@ -31,6 +38,12 @@ public class City {
 
     public void setCoord(Coord coord) {
         this.coord = coord;
+    }
+
+    private static void initCityCoord() {
+        cityCoord.put(MSC, new Coord("55.751244", "37.618423"));
+        cityCoord.put(SPB, new Coord("59.94117", "30.324928"));
+        cityCoord.put(OMSK, new Coord("54.983334", "73.366669"));
     }
 
     public static class Coord {
