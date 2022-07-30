@@ -5,7 +5,7 @@ FROM gradle:7.4.0-jdk11-alpine AS build
 COPY src /home/app/src
 COPY build.gradle /home/app
 WORKDIR /home/app
-RUN gradle clean build jar --no-daemon
+RUN gradle clean build jar
 
 #
 # Package stage
