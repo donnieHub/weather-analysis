@@ -4,12 +4,12 @@ import com.mongodb.MongoClient;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
-import org.bson.Document;
 import java.io.IOException;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.time.Duration;
+import org.bson.Document;
 import org.mychko.weatheranalysis.City.Coord;
 
 public class WeatherAnalysisApplication {
@@ -34,7 +34,7 @@ public class WeatherAnalysisApplication {
 		System.out.println(response.body());
 		System.out.println("--------------------------------------------------------");
 
-		MongoClient mongoClient = new MongoClient("localhost", 27017);
+		MongoClient mongoClient = new MongoClient("mymongo", 27017);
 		MongoDatabase db = mongoClient.getDatabase("weather");
 		Document document = Document.parse(response.body());
 		db.getCollection("weather-coll").insertOne(document);
