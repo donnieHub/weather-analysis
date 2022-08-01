@@ -1,7 +1,7 @@
 package org.mychko.weatheranalysis;
 
 public enum CityName {
-    MSC,
+    MSK,
     SPB,
     OMSK
 }

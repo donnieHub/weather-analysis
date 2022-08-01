@@ -1,6 +1,6 @@
 package org.mychko.weatheranalysis;
 
-import static org.mychko.weatheranalysis.CityName.MSC;
+import static org.mychko.weatheranalysis.CityName.MSK;
 import static org.mychko.weatheranalysis.CityName.OMSK;
 import static org.mychko.weatheranalysis.CityName.SPB;
 
@@ -41,7 +41,7 @@ public class City {
     }
 
     private static void initCityCoord() {
-        cityCoord.put(MSC, new Coord("55.751244", "37.618423"));
+        cityCoord.put(MSK, new Coord("55.751244", "37.618423"));
         cityCoord.put(SPB, new Coord("59.94117", "30.324928"));
         cityCoord.put(OMSK, new Coord("54.983334", "73.366669"));
     }

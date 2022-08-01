@@ -12,7 +12,6 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.time.Duration;
 import org.bson.Document;
-import org.mychko.weatheranalysis.City.Coord;
 
 public class WeatherAnalysisApplication {
 
@@ -57,7 +56,7 @@ public class WeatherAnalysisApplication {
 			try {
 				CityName.valueOf(args[0]);
 			} catch (IllegalArgumentException e) {
-				throw new RuntimeException("Please insert name of the city for example OMSK");
+				throw new RuntimeException(args[0] + " is not the city. Please insert name of the city for example OMSK");
 			}
 			city = new City(CityName.valueOf(args[0]));
 		}
