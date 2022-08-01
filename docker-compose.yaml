@@ -6,9 +6,10 @@ volumes:
 services:
   weather:
     build: .
+    depends_on:
+      - mymongo
     environment:
-      - MONGO_DB_ADDR=mymongo
-      - MONGO_DB_PORT=27017
+      - CITY=OMSK
   mymongo:
     image: mongo:latest
     restart: always
